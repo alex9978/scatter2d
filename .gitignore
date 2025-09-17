@@ -6,5 +6,5 @@ export_presets.cfg
 .godot/
 
 # Scatter-specific ignores
-addons/proton_scatter/cache/
+addons/scatter2d/cache/
 tmp/

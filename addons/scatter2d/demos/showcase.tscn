@@ -1,0 +1,62 @@
+[gd_scene load_steps=16 format=3 uid="uid://dtu41wuo4tnvv"]
+
+[ext_resource type="Script" uid="uid://blehcnoynshbt" path="res://addons/scatter2d/src/scatter2d.gd" id="1_cro7m"]
+[ext_resource type="Script" uid="uid://xn7w5wbnwdme" path="res://addons/scatter2d/src/stack/modifier_stack.gd" id="2_4ab3x"]
+[ext_resource type="Script" uid="uid://mvkmr4qqe3h0" path="res://addons/scatter2d/src/modifiers/modifier_base.gd" id="3_w2vlq"]
+[ext_resource type="Script" uid="uid://hyqvvrgfx6j5" path="res://addons/scatter2d/src/modifiers/mod_create_inside_poisson.gd" id="4_3n8nw"]
+[ext_resource type="Script" uid="uid://ca3v4wua5un07" path="res://addons/scatter2d/src/modifiers/mod_randomize_rotation.gd" id="5_3n8nw"]
+[ext_resource type="Script" uid="uid://h0re0ckmxr17" path="res://addons/scatter2d/src/scatter_shape.gd" id="5_qae80"]
+[ext_resource type="Script" uid="uid://1wbh6o12u2v4" path="res://addons/scatter2d/src/shapes/shape_box.gd" id="6_w74o8"]
+[ext_resource type="Script" uid="uid://8wl6weshukhx" path="res://addons/scatter2d/src/scatter_item.gd" id="7_ye0vd"]
+[ext_resource type="Curve2D" uid="uid://bmy3lfwo72ykd" path="res://addons/scatter2d/presets/curve_2d.tres" id="9_qae80"]
+[ext_resource type="Script" uid="uid://bf151xcbregqy" path="res://addons/scatter2d/src/shapes/shape_path.gd" id="10_w74o8"]
+
+[sub_resource type="Resource" id="Resource_cro7m"]
+script = ExtResource("4_3n8nw")
+radius = 20.0
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_ye0vd"]
+script = ExtResource("5_3n8nw")
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_4ab3x"]
+script = ExtResource("2_4ab3x")
+stack = Array[ExtResource("3_w2vlq")]([SubResource("Resource_cro7m"), SubResource("Resource_ye0vd")])
+
+[sub_resource type="Resource" id="Resource_ofdrb"]
+script = ExtResource("6_w74o8")
+size = Vector2(200, 200)
+metadata/_custom_type_script = "uid://1wbh6o12u2v4"
+
+[sub_resource type="Resource" id="Resource_2qcah"]
+script = ExtResource("10_w74o8")
+closed = false
+thickness = 50.0
+curve = ExtResource("9_qae80")
+metadata/_custom_type_script = "uid://bf151xcbregqy"
+
+[node name="Showcase" type="Node2D"]
+
+[node name="Scatter2D" type="Node2D" parent="."]
+position = Vector2(248, 134)
+script = ExtResource("1_cro7m")
+modifier_stack = SubResource("Resource_4ab3x")
+metadata/_custom_type_script = "uid://blehcnoynshbt"
+
+[node name="ScatterShapeBox" type="Node2D" parent="Scatter2D"]
+position = Vector2(-1, 2)
+script = ExtResource("5_qae80")
+shape = SubResource("Resource_ofdrb")
+metadata/_custom_type_script = "uid://h0re0ckmxr17"
+
+[node name="ScatterItem" type="Node2D" parent="Scatter2D"]
+script = ExtResource("7_ye0vd")
+path = "uid://bhwyqe0glm3hn"
+metadata/_custom_type_script = "uid://8wl6weshukhx"
+
+[node name="ScatterShape" type="Node2D" parent="Scatter2D"]
+position = Vector2(-1, 92)
+script = ExtResource("5_qae80")
+shape = SubResource("Resource_2qcah")
+metadata/_custom_type_script = "uid://h0re0ckmxr17"

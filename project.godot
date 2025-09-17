@@ -10,15 +10,16 @@ config_version=5
 
 [addons]
 
-proton_scatter/always_show_gizmos=false
+"scatter2d[application]config/name"="Scatter2D"
+config/tags=PackedStringArray("addon")
+run/main_scene="res://addons/scatter2d/demos/showcase.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
 
 [application]
 
-config/name="ProtonScatter"
-config/tags=PackedStringArray("addon")
-run/main_scene="res://addons/proton_scatter/demos/showcase.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+config/name="Scatter2D"
+config/features=PackedStringArray("4.5")
 
 [debug]
 
@@ -31,8 +32,4 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/proton_scatter/plugin.cfg")
-
-[rendering]
-
-anti_aliasing/quality/msaa_3d=2
+enabled=PackedStringArray("res://addons/scatter2d/plugin.cfg")
