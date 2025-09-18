@@ -2,6 +2,7 @@
 
 > ### Place anything you want in your scenes, in a procedural, non-destructive way.
 
+![Alt text](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/1.jpg)
 
 ## What is it?
 
