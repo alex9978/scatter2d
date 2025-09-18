@@ -1,4 +1,5 @@
 Copyright (c) 2020-present HungryProton.
+
 Copyright (c) 2025 Alessandro Rasulo.
 
 This project "Scatter2D" is a fork of the original project by HungryProton.
