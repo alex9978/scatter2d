@@ -9,12 +9,12 @@
 [ext_resource type="Script" uid="uid://8wl6weshukhx" path="res://addons/scatter2d/src/scatter_item.gd" id="7_ye0vd"]
 [ext_resource type="Script" uid="uid://c1ot4152uiq8g" path="res://addons/scatter2d/src/cache/scatter_cache.gd" id="9_3n8nw"]
 
-[sub_resource type="Resource" id="Resource_3n8nw"]
+[sub_resource type="Resource" id="Resource_4ab3x"]
 script = ExtResource("4_4ab3x")
 
-[sub_resource type="Resource" id="Resource_qae80"]
+[sub_resource type="Resource" id="Resource_w2vlq"]
 script = ExtResource("2_4ab3x")
-stack = Array[ExtResource("3_w2vlq")]([SubResource("Resource_3n8nw")])
+stack = Array[ExtResource("3_w2vlq")]([SubResource("Resource_4ab3x")])
 
 [sub_resource type="Resource" id="Resource_w74o8"]
 script = ExtResource("7_w2vlq")
@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://be38uo81cr7xh"
 [node name="Scatter2D" type="Node2D" parent="."]
 script = ExtResource("1_cro7m")
 global_seed = 7
-modifier_stack = SubResource("Resource_qae80")
+modifier_stack = SubResource("Resource_w2vlq")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="Scatter2D"]

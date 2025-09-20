@@ -89,8 +89,6 @@ func _on_selection_changed() -> void:
 			if c is ScatterShape:
 				_selected_scatter_group.push_back(c)
 
-	#_refresh_scatter_gizmos(_selected_scatter_group)
-
 
 func _on_scene_changed(_scene_root) -> void:
 	pass
