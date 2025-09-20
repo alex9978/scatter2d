@@ -616,6 +616,7 @@ func _draw():
 			
 	if not _is_selected(self):
 		return
+		
 	_update_colors(dbg_color)
 	
 	if modifier_stack:
@@ -624,10 +625,11 @@ func _draw():
 			
 		_curves.clear()
 		_curves = domain.get_edges()
+		
 		for curve in _curves:
 			var points: PackedVector2Array = curve.tessellate(4, 8)
 			draw_colored_polygon(points, _light_color)
-			draw_polyline(points, _drawing_color, 2, true)
+			draw_multiline(points, _drawing_color, 2, true)
 		
 
 func _is_selected(node: Node) -> bool:

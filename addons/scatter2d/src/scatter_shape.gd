@@ -81,6 +81,7 @@ func _draw():
 		
 	if not _is_selected(self):
 		return
+		
 	_update_colors(dbg_color)
 	
 	if shape:
@@ -98,10 +99,16 @@ func _draw():
 
 func _is_selected(node: Node) -> bool:
 	var editor_selection := EditorInterface.get_selection()
-	return node in editor_selection.get_selected_nodes()
+	var selected = node in editor_selection.get_selected_nodes()
+	if negative and not selected:
+		selected = get_parent() in editor_selection.get_selected_nodes()
+	return selected
 
 
 func _update_colors(base_color:Color):
 	_drawing_color = base_color
 	_light_color = base_color
 	_light_color.a /= 4
+	if negative:
+		_drawing_color = _drawing_color.inverted()
+		_light_color = _light_color.inverted()

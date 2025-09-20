@@ -159,8 +159,8 @@ func compute_edges() -> void:
 
 		# Store open edges directly since they are already Curve3D and we
 		# don't apply boolean operations to them.
-		#var open_edges = info.shape.get_open_edges(info.node.transform)
-		#edges.append_array(open_edges)
+		var open_edges = info.shape.get_open_edges(info.node.transform)
+		edges.append_array(open_edges)
 
 	if source_polygons.is_empty():
 		return
@@ -236,7 +236,7 @@ func compute_edges() -> void:
 		if not merged:
 			merged_polygons.push_back(p1)
 
-	## For each polygons from the previous step, create a corresponding Curve3D
+	## For each polygons from the previous step, create a corresponding Curve2D
 	for cp in merged_polygons:
 		for polygon in cp.get_all():
 			if polygon.size() < 2: # Ignore polygons too small to form a loop
