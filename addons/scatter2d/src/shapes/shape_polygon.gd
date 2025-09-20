@@ -15,15 +15,15 @@ extends ScatterShapeBase
 		simplify_polygon = value
 		_update_internal_points()
 		emit_changed()
-		
-		
+
+
 @export var epsilon: float = 1.0 :
 	set(value):
 		epsilon = value
 		_update_internal_points()
 		emit_changed()
-		
-		
+
+
 var _internal_points: PackedVector2Array
 
 
@@ -72,7 +72,7 @@ func _simplify_polygon(points: PackedVector2Array, epsilon: float) -> PackedVect
 	var index = 0
 	var start_point = points[0]
 	var end_point = points[points.size() - 1]
-	
+
 	for i in range(1, points.size() - 1):
 		var d = _perpendicular_distance(points[i], start_point, end_point)
 		if d > dmax:
@@ -101,12 +101,11 @@ func _simplify_polygon(points: PackedVector2Array, epsilon: float) -> PackedVect
 		return result
 	else:
 		return PackedVector2Array([start_point, end_point])
-	
-	
+
+
 func _perpendicular_distance(point: Vector2, line_start: Vector2, line_end: Vector2) -> float:
 	var numerator = abs((line_end.y - line_start.y) * point.x - (line_end.x - line_start.x) * point.y + line_end.x * line_start.y - line_end.y * line_start.x)
 	var denominator = line_start.distance_to(line_end)
 	if denominator == 0:
 		return point.distance_to(line_start)
 	return numerator / denominator
-	

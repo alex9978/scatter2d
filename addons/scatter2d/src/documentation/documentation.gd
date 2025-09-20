@@ -49,11 +49,10 @@ func set_editor_plugin(editor_plugin: EditorPlugin) -> void:
 	if not editor_plugin:
 		return
 
-	var editor_interface := editor_plugin.EditorInterface
-	var editor_settings := editor_interface.get_editor_settings()
+	var editor_settings := EditorInterface.get_editor_settings()
 
 	_accent_color = editor_settings.get("interface/theme/accent_color")
-	_editor_scale = editor_interface.get_editor_scale()
+	_editor_scale = EditorInterface.get_editor_scale()
 
 
 func show_page(page_name: String) -> void:

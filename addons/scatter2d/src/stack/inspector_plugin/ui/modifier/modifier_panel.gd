@@ -94,10 +94,10 @@ func create_ui_for(modifier) -> void:
 	_override_ui.set_value(modifier.override_global_seed)
 	_custom_seed_ui.set_value(modifier.custom_seed)
 	_transform_space_ui.set_value(modifier.reference_frame)
-	
+
 	# Loop over the other properties and create a ui component for each of them
 	for property in modifier.get_property_list():
-		
+
 		if property.usage != PROPERTY_USAGE_DEFAULT + PROPERTY_USAGE_SCRIPT_VARIABLE:
 			continue
 
@@ -124,7 +124,7 @@ func create_ui_for(modifier) -> void:
 			TYPE_VECTOR3:
 				parameter_ui = ParameterVector3.instantiate()
 			TYPE_VECTOR2:
-				parameter_ui = ParameterVector2.instantiate()				
+				parameter_ui = ParameterVector2.instantiate()
 			TYPE_NODE_PATH:
 				parameter_ui = ParameterNodeSelector.instantiate()
 				parameter_ui.set_root(_scatter)

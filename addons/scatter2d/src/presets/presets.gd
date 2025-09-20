@@ -67,7 +67,7 @@ func set_editor_plugin(editor_plugin: EditorPlugin) -> void:
 	if not editor_plugin:
 		return
 
-	_editor_file_system = editor_plugin.EditorInterface.get_resource_filesystem()
+	_editor_file_system = EditorInterface.get_resource_filesystem()
 
 
 func _clear():

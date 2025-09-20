@@ -29,7 +29,7 @@ static func ensure_output_root_exists(s: Scatter2D) -> void:
 	s.add_child(s.output_root, true)
 
 	enforce_output_root_owner(s)
-	
+
 
 static func enforce_output_root_owner(s: Scatter2D) -> void:
 	if is_instance_valid(s.output_root) and s.is_inside_tree():
@@ -59,9 +59,9 @@ static func get_or_create_item_root(item: ScatterItem) -> Node2D:
 			item_root.owner = item.get_tree().get_edited_scene_root()
 
 	return item_root
-	
 
-	
+
+
 static func get_all_mesh_instances_from(node: Node) -> Array[MeshInstance2D]:
 	var res: Array[MeshInstance2D] = []
 
@@ -92,7 +92,7 @@ static func get_or_create_multimesh(item: ScatterItem, count: int) -> MultiMeshI
 		mmi.set_name("MultiMeshInstance2D")
 		item_root.add_child(mmi, true)
 		mmi.set_owner(item_root.owner)
-		
+
 	if not mmi.multimesh:
 		mmi.multimesh = MultiMesh.new()
 
@@ -106,11 +106,11 @@ static func get_or_create_multimesh(item: ScatterItem, count: int) -> MultiMeshI
 	mmi.multimesh.instance_count = 0 # Set this to zero or you can't change the other values
 	mmi.multimesh.mesh = mesh_instance.mesh
 	mmi.multimesh.transform_format = MultiMesh.TRANSFORM_2D
-	mmi.multimesh.instance_count = count	
+	mmi.multimesh.instance_count = count
 
 	mesh_instance.queue_free()
 	return mmi
-		
+
 
 static func request_parent_to_rebuild(node: Node, deferred := true) -> void:
 	var parent = node.get_parent()
@@ -125,7 +125,7 @@ static func request_parent_to_rebuild(node: Node, deferred := true) -> void:
 			parent.rebuild.call_deferred(true)
 		else:
 			parent.rebuild(true)
-			
+
 
 static func get_all_static_bodies_from(node: Node) -> Array[StaticBody2D]:
 	var res: Array[StaticBody2D] = []
@@ -137,7 +137,7 @@ static func get_all_static_bodies_from(node: Node) -> Array[StaticBody2D]:
 		res.append_array(get_all_static_bodies_from(c))
 
 	return res
-	
+
 
 # Grab every static bodies from the source item and merge them in a single
 # one with multiple collision shapes.
@@ -159,7 +159,7 @@ static func get_collision_data(item: ScatterItem) -> StaticBody2D:
 
 	source.queue_free()
 	return static_body
-	
+
 
 
 static func set_owner_recursive(node: Node, new_owner) -> void:
@@ -189,7 +189,7 @@ static func get_or_create_particles(item: ScatterItem) -> GPUParticles2D:
 
 	#var shader_material = ShaderMaterial.new()
 	#shader_material.shader = preload("../particles/static.gdshader")
-	
+
 	#particles.process_material = shader_material
 	#particles.material_override = get_final_material(item, mesh_instance)
 	#particles.set_draw_pass_mesh(0, mesh_instance.mesh)
@@ -247,7 +247,7 @@ static func get_merged_meshes_from(item: ScatterItem) -> MeshInstance2D:
 		# Duplicate the meshinstance, not the mesh resource
 		var mi: MeshInstance2D = mesh_instances[0].duplicate()
 		return mi
-		
+
 		# MI uses a material override, all surface materials will be ignored
 		#if mi.material_override:
 			#return mi
@@ -402,7 +402,7 @@ static func get_aabb_from_transforms(transforms : Array) -> Rect2:
 	for t in transforms:
 		aabb = aabb.expand(t.origin)
 	return aabb
-	
+
 
 static func get_position_and_normal_at(curve: Curve2D, offset: float) -> Array:
 	if not curve:

@@ -47,13 +47,11 @@ var _font: Font
 
 func _ready() -> void:
 	#rect_min_size.y *= EditorUtil.get_editor_scale()
-	var plugin := EditorPlugin.new()
-	var editor_theme := plugin.EditorInterface.get_base_control().get_theme()
+	var editor_theme := EditorInterface.get_base_control().get_theme()
 	if editor_theme:
 		_font = editor_theme.get_font("Main", "EditorFonts")
 	else:
 		_font = ThemeDB.fallback_font
-	plugin.queue_free()
 
 	queue_redraw()
 	connect("resized", _on_resized)

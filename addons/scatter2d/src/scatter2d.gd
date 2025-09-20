@@ -9,9 +9,7 @@ signal build_completed
 
 
 const ScatterDomain := preload("common/domain.gd")
-#const ScatterItem := preload("scatter_item.gd")
 const ScatterModifierStack := preload("stack/modifier_stack.gd")
-#const ScatterShape := preload("scatter_shape.gd")
 const ScatterTransformList := preload("common/transform_list.gd")
 const ScatterUtils := preload('common/scatter_utils.gd')
 
@@ -615,14 +613,14 @@ func _draw():
 	if modifier_stack:
 		if is_thread_running():
 			_update_colors(dbg_loading_color)
-
+#
 		_curves.clear()
 		_curves = domain.get_edges()
-
+#
 		for curve in _curves:
-			var points: PackedVector2Array = curve.tessellate(4, 8)
+			var points := curve.tessellate(4, 8)
 			draw_colored_polygon(points, _light_color)
-			draw_multiline(points, _drawing_color, 2, true)
+			draw_polyline(points, _drawing_color, 2, true)
 
 
 func _is_selected(node: Node) -> bool:

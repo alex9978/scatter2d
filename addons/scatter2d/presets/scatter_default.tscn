@@ -3,28 +3,29 @@
 [ext_resource type="Script" uid="uid://blehcnoynshbt" path="res://addons/scatter2d/src/scatter2d.gd" id="1_cpdh4"]
 [ext_resource type="Script" uid="uid://xn7w5wbnwdme" path="res://addons/scatter2d/src/stack/modifier_stack.gd" id="2_ofdrb"]
 [ext_resource type="Script" uid="uid://mvkmr4qqe3h0" path="res://addons/scatter2d/src/modifiers/modifier_base.gd" id="3_x5y3g"]
-[ext_resource type="Script" uid="uid://hyqvvrgfx6j5" path="res://addons/scatter2d/src/modifiers/mod_create_inside_poisson.gd" id="4_j443r"]
+[ext_resource type="Script" uid="uid://dud2pkt70o4ui" path="res://addons/scatter2d/src/modifiers/mod_create_inside_random.gd" id="4_bicmu"]
 [ext_resource type="Script" uid="uid://h0re0ckmxr17" path="res://addons/scatter2d/src/scatter_shape.gd" id="5_jdf0k"]
 [ext_resource type="Script" uid="uid://1wbh6o12u2v4" path="res://addons/scatter2d/src/shapes/shape_box.gd" id="6_allmq"]
 [ext_resource type="Script" uid="uid://8wl6weshukhx" path="res://addons/scatter2d/src/scatter_item.gd" id="9_374jg"]
 
-[sub_resource type="Resource" id="Resource_allmq"]
-script = ExtResource("4_j443r")
-radius = 20.0
+[sub_resource type="Resource" id="Resource_bicmu"]
+script = ExtResource("4_bicmu")
+amount = 30
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_bicmu"]
+[sub_resource type="Resource" id="Resource_cpdh4"]
 script = ExtResource("2_ofdrb")
-stack = Array[ExtResource("3_x5y3g")]([SubResource("Resource_allmq")])
+stack = Array[ExtResource("3_x5y3g")]([SubResource("Resource_bicmu")])
 
 [sub_resource type="Resource" id="Resource_ofdrb"]
 script = ExtResource("6_allmq")
-size = Vector2(200, 200)
+size = Vector2(400, 200)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
 [node name="Scatter2D" type="Node2D"]
 script = ExtResource("1_cpdh4")
-modifier_stack = SubResource("Resource_bicmu")
+dbg_disable_thread = true
+modifier_stack = SubResource("Resource_cpdh4")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="."]

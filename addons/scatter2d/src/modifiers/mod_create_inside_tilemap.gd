@@ -5,10 +5,12 @@ extends "modifier_base.gd"
 @export var amount := 10
 
 var _rng: RandomNumberGenerator
+var _internal_transforms: Array[Transform2D]
+var _transforms_initialized = false
 
 
 func _init() -> void:
-	display_name = "Create Inside (Random)"
+	display_name = "Create Inside (TileMapLayer)"
 	category = "Create"
 	warning_ignore_no_transforms = true
 	warning_ignore_no_shape = false
@@ -19,7 +21,7 @@ func _init() -> void:
 
 	documentation.add_paragraph(
 		"Randomly place new transforms inside the area defined by
-		the ScatterShape nodes.")
+		the TileMapLayer node.")
 
 	var p := documentation.add_parameter("Amount")
 	p.set_type("int")
@@ -37,6 +39,7 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 	_rng = RandomNumberGenerator.new()
 	_rng.set_seed(random_seed)
 
+	var new_transforms: Array[Transform2D]
 	var gt: Transform2D = domain.get_global_transform()
 	var center: Vector2 = domain.bounds_local.center
 	var half_size: Vector2 = domain.bounds_local.size / 2.0
@@ -46,26 +49,21 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 	# domain, or discard if invalid. Repeat until enough valid points are found.
 	var t: Transform2D
 	var pos: Vector2
-	var new_transforms: Array[Transform2D] = []
-	var max_retries = amount * 10
-	var tries := 0
 
-	while new_transforms.size() < amount:
-		t = Transform2D()
-		pos = _random_vec2() * half_size + center
+	if not _transforms_initialized:
+		while _internal_transforms.size() < amount:
+			t = Transform2D()
+			pos = _random_vec2() * half_size + center
 
-		if is_using_global_space():
-			t = gt.affine_inverse()
+			if is_using_global_space():
+				t = gt.affine_inverse()
 
-		if domain.is_point_inside(pos):
 			t.origin = pos
-			new_transforms.push_back(t)
-			continue
+			_internal_transforms.push_back(t)
 
-		# Prevents an infinite loop
-		tries += 1
-		if tries > max_retries:
-			break
+	for it in _internal_transforms:
+		if domain.is_point_inside(it.origin):
+			new_transforms.push_back(it)
 
 	transforms.append(new_transforms)
 

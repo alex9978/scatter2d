@@ -1,23 +1,20 @@
 @tool
 extends Resource
 
-
 signal stack_changed
 signal value_changed
 signal transforms_ready
 
-
-const Scatter := preload("../scatter2d.gd")
+const ScatterDomain := preload("../common/domain.gd")
 const TransformList := preload("../common/transform_list.gd")
-
 
 @export var stack: Array[ScatterModifierBase] = []
 
 var just_created := false
 
 
-func start_update(scatter_node: Scatter, domain):
-	var transforms = TransformList.new()
+func start_update(scatter_node: Scatter2D, domain: ScatterDomain):
+	var transforms := TransformList.new()
 
 	for modifier in stack:
 		await modifier.process_transforms(transforms, domain, scatter_node.global_seed)
@@ -78,7 +75,6 @@ func is_using_edge_data() -> bool:
 	for modifier in stack:
 		if modifier.use_edge_data:
 			return true
-
 	return false
 
 

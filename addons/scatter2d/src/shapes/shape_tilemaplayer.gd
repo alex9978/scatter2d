@@ -37,7 +37,8 @@ func get_copy():
 func is_point_inside(point: Vector2, global_transform: Transform2D) -> bool:
 	_get_layer_node()
 	if _layer_node:
-		var map_pos = _layer_node.local_to_map(point)
+		var local_point = global_transform.affine_inverse() * point
+		var map_pos = _layer_node.local_to_map(local_point)
 		return _layer_node.get_cell(map_pos) == 1
 	return false
 

@@ -16,7 +16,7 @@ func _init() -> void:
 	local_reference_frame_available = true
 	individual_instances_reference_frame_available = true
 	use_individual_instances_space_by_default()
-	
+
 	documentation.add_paragraph("Randomly rotate every transforms individually.")
 
 	var p := documentation.add_parameter("Rotation")
@@ -48,9 +48,9 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 		# Apply rotation
 		if is_using_individual_instances_space():
 			basis = basis.orthonormalized()
-				
+
 		basis = basis.rotated(_random_angle(rotation, snap_angle))
-		
+
 		basis.origin = t.origin
 		t = basis
 		transforms.list[i] = t

@@ -7,11 +7,11 @@ extends "modifier_base.gd"
 
 func _init() -> void:
 	display_name = "Remove Outside"
-	category = "Remove"	
+	category = "Remove"
 	global_reference_frame_available = false
 	local_reference_frame_available = false
 	individual_instances_reference_frame_available = false
-	
+
 	documentation.add_paragraph(
 		"Remove all transforms falling outside a ScatterShape node, or inside
 		a shape set to 'Negative' mode.")

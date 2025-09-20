@@ -38,12 +38,12 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 		# Apply rotation
 		if is_using_individual_instances_space():
 			basis = basis.orthonormalized()
-				
+
 		basis = basis.rotated(deg_to_rad(_random_float() * rotation))
-		
+
 		# Apply scale
 		random_scale = Vector2.ONE + (_rng.randf() * scale)
-				
+
 		if is_using_individual_instances_space():
 			basis.x *= random_scale.x
 			basis.y *= random_scale.y
@@ -53,7 +53,7 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 			basis = gt_inverse * global_t
 		else:
 			basis = basis.scaled_local(random_scale)
-		
+
 		# Apply translation
 		random_position = _random_vec2() * position
 
@@ -66,7 +66,7 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 		basis.origin = t.origin + random_position
 		t = basis
 		transforms.list[i] = t
-		
+
 
 
 func _random_vec2() -> Vector2:
