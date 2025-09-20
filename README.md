@@ -18,6 +18,23 @@ The basic setup is as follows:
 + One or more `ScatterShape` items to define the area where the scattering happens.
 
 
+### Creating points
+
+| ![grid](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/grid.png) | ![random](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/random.png) |
+|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| Placing items aligned on a grid                                                                   | Placing items randomly                                                                                |
+|![poisson](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/poisson.png) | ![along_edge](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/edges.png) |
+| Placing items with poisson                                                                             | Placing items along an edge                                                                              |
+
+
+### Defining the domain
+
+Scatter currently ships with five shape types: Box, Circle, Path, Polygon and TileMapLayer. They can be combined to create more complex shapes. If a shape has an inverted color (light blue in the example), it is a negative shape, where no items appear.
+
+| ![domain](https://raw.githubusercontent.com/alex9978/scatter2d/refs/heads/v4/files/images/domain.png) |
+|-------------------------------------------------------------------------------------------------------|
+
+
 ## License
 
 - This add-on is published under the MIT license.
