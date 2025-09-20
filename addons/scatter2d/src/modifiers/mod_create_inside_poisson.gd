@@ -1,8 +1,7 @@
 @tool
 extends "modifier_base.gd"
 
-# Poisson disc sampling based on Sebastian Lague implementation, modified to
-# support both 2D and 3D space.
+# Poisson disc sampling based on Sebastian Lague implementation.
 # Reference: https://www.youtube.com/watch?v=7WcmyxyFO7o
 
 # TODO: This doesn't work if the valid space isn't one solid space
@@ -82,7 +81,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 	# This array will progressively be emptied as the algorithm progresses.
 	var spawn_points: Array[Transform2D]
 	spawn_points.push_back(_get_starting_point())
-	
+
 	if not _starting_point_found:
 		print("no starting point - return")
 		return
@@ -109,10 +108,10 @@ func _process_transforms(transforms, domain, seed) -> void:
 
 				# Add new points to the lists
 				var t = Transform2D()
-				
+
 				if is_using_global_space():
 					t = _gt.affine_inverse()
-					
+
 				t.origin = candidate
 				_points.push_back(t)
 				spawn_points.push_back(t)
@@ -127,7 +126,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 		# spawn point is probably full, discard it.
 		if not candidate_accepted:
 			spawn_points.remove_at(spawn_index)
-	
+
 	transforms.append(_points)
 	transforms.shuffle(seed)
 	print("poisson end")
@@ -157,10 +156,10 @@ func _get_starting_point() -> Transform2D:
 		tries += 1
 		point.x = _rng.randf_range(_bounds.min.x, _bounds.max.x)
 		point.y = _rng.randf_range(_bounds.min.y, _bounds.max.y)
-	
+
 	print("tries: ", tries)
 	_starting_point_found = tries < 200
-	
+
 	var starting_point := Transform2D()
 	starting_point.origin = point
 	return starting_point
@@ -202,4 +201,3 @@ func _is_point_too_close(candidate: Vector2, point_index: int) -> bool:
 func _generate_random_vector() -> Vector2:
 	var angle = _rng.randf_range(0.0, TAU)
 	return Vector2(sin(angle), cos(angle))
-	

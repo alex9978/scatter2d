@@ -16,7 +16,7 @@ func _init() -> void:
 	global_reference_frame_available = true
 	local_reference_frame_available = true
 	use_local_space_by_default()
-	
+
 	documentation.add_paragraph(
 		"Randomly place new transforms inside the area defined by
 		the ScatterShape nodes.")

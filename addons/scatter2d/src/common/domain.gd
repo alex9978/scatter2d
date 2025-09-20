@@ -28,7 +28,7 @@ class DomainShapeInfo:
 			return shape.is_point_inside(point, t)
 		else:
 			return false
-	
+
 	func get_corners_global() -> Array:
 		return shape.get_corners_global(node.get_global_transform())
 
@@ -157,7 +157,7 @@ func compute_edges() -> void:
 		else:
 			source_polygons.push_front(polygon)
 
-		# Store open edges directly since they are already Curve3D and we
+		# Store open edges directly since they are already Curve2D and we
 		# don't apply boolean operations to them.
 		var open_edges = info.shape.get_open_edges(info.node.transform)
 		edges.append_array(open_edges)

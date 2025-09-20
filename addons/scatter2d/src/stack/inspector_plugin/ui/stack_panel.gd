@@ -44,10 +44,10 @@ func rebuild_ui() -> void:
 
 	_validate_stack_connections()
 	_clear()
-	
+
 	if not _modifier_stack:
 		return
-	
+
 	for m in _modifier_stack.stack:
 		var ui = ModifierPanel.instantiate()
 		_modifiers_container.add_child(ui)
@@ -147,7 +147,7 @@ func _on_value_changed() -> void:
 	_modifier_stack.value_changed.emit()
 
 
-func _on_rebuild_pressed() -> void:		
+func _on_rebuild_pressed() -> void:
 	if _scatter:
 		_scatter.full_rebuild()
 

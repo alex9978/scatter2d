@@ -110,7 +110,7 @@ static func get_modifiers_documentation() -> DocumentationInfo:
 
 	info.set_title("Modifiers")
 	info.add_paragraph(
-		"A modifier takes in a Transform3D list, create, modify or delete
+		"A modifier takes in a Transform2D list, create, modify or delete
 		transforms, then pass it down to the next modifier. Remember that
 		[b] modifiers are processed from top to bottom [/b]. A modifier
 		down the stack will recieve a list processed by the modifiers above.")

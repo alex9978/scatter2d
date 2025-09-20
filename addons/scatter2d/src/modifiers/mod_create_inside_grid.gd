@@ -51,7 +51,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 
 	var width := int(ceil(size.x / spacing.x))
 	var height := int(ceil(size.y / spacing.y))
-	
+
 	height = max(1, height) # Make sure height never gets below 1 or else nothing happens
 
 	var max_count: int = width * height

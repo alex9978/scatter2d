@@ -92,7 +92,7 @@ func update_cache() -> void:
 	if cache_file.is_empty():
 		printerr("Cache file path is empty.")
 		return
-	
+
 	_purge_outdated_nodes()
 	_discover_scatter_nodes(_scene_root)
 
@@ -103,7 +103,7 @@ func update_cache() -> void:
 		var cached_version: int = _scatter_nodes[s]
 		if s.build_version == cached_version:
 			continue
-		
+
 		# If transforms are not available, try to rebuild once.
 		if not s.transforms:
 			s.rebuild.call_deferred()
@@ -134,7 +134,7 @@ func restore_cache() -> void:
 	if not ResourceLoader.exists(cache_file):
 		printerr("Could not find cache file ", cache_file)
 		return
-	
+
 	# Cache files are large, load on a separate thread
 	ResourceLoader.load_threaded_request(cache_file)
 	while true:
@@ -147,7 +147,7 @@ func restore_cache() -> void:
 				return
 			ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED:
 				break
-	
+
 	_local_cache = ResourceLoader.load_threaded_get(cache_file)
 	if not _local_cache:
 		printerr("Could not load cache: ", cache_file)
@@ -167,7 +167,7 @@ func restore_cache() -> void:
 		s._on_transforms_ready(transforms)
 		s.build_version = 0
 		_scatter_nodes[s] = 0
-	
+
 	cache_restored.emit()
 
 
@@ -206,7 +206,7 @@ func _purge_outdated_nodes() -> void:
 			nodes_to_remove.push_back(node)
 			_local_cache.erase(_scene_root.get_path_to(node))
 			_local_cache_changed = true
-	
+
 	for node in nodes_to_remove:
 		_scatter_nodes.erase(node)
 

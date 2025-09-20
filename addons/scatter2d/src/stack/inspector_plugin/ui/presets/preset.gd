@@ -9,8 +9,8 @@ signal delete_preset
 @onready var _label: Label = $MarginContainer/HBoxContainer/Label
 
 
-func set_preset_name(text) -> void:
-	_label.text = text
+func set_preset_name(value) -> void:
+	_label.text = value
 
 
 func _on_pressed() -> void:

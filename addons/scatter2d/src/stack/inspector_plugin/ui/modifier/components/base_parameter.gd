@@ -43,7 +43,7 @@ func get_editor_theme() -> Theme:
 		editor_interface = EditorInterface
 		return editor_interface.get_editor_theme()
 	else:
-		editor_interface = _scatter.editor_plugin.get_editor_interface()
+		editor_interface = _scatter.editor_plugin.EditorInterface
 		return editor_interface.get_base_control().get_theme()
 
 

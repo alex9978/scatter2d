@@ -116,7 +116,7 @@ func process_transform(t: Transform2D) -> Transform2D:
 		t = t.scaled(source_scale)
 
 	if not source_ignore_rotation:
-		t = t.rotated(source_rotation)		
+		t = t.rotated(source_rotation)
 
 	t.origin = origin
 

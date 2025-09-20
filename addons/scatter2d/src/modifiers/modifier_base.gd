@@ -46,7 +46,7 @@ func process_transforms(transforms:TransformList, domain:Domain, global_seed:int
 
 	if Engine.is_editor_hint():
 		_clear_warning()
-	
+
 		if not enabled:
 			warning_changed.emit()
 			return

@@ -21,7 +21,7 @@ func start_update(scatter_node: Scatter, domain):
 
 	for modifier in stack:
 		await modifier.process_transforms(transforms, domain, scatter_node.global_seed)
-	
+
 	transforms_ready.emit(transforms)
 	return transforms
 

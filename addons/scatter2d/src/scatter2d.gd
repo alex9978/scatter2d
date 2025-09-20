@@ -140,8 +140,8 @@ func _ready() -> void:
 
 	if force_rebuild_on_load and not is_instance_valid(_dependency_parent):
 		full_rebuild.call_deferred()
-		
-		
+
+
 func _process(_delta: float) -> void:
 	queue_redraw()
 
@@ -151,7 +151,7 @@ func _exit_tree():
 		modifier_stack.stop_update()
 		_thread.wait_to_finish()
 		_thread = null
-	
+
 	_clear_collision_data()
 
 
@@ -161,7 +161,7 @@ func _get_property_list() -> Array:
 		name = "modifier_stack",
 		type = TYPE_OBJECT,
 		hint_string = "ModifierStack",
-	})	
+	})
 	return list
 
 
@@ -252,8 +252,7 @@ func _clear_collision_data() -> void:
 # Wrapper around the _rebuild function. Clears previous output and force
 # a clean rebuild.
 func full_rebuild():
-	#update_helpers()
-	
+
 	if not is_inside_tree():
 		return
 
@@ -262,7 +261,7 @@ func full_rebuild():
 	if is_thread_running():
 		await _thread.wait_to_finish()
 		_thread = null
-	
+
 	clear_output()
 	_rebuild(true)
 
@@ -272,7 +271,6 @@ func full_rebuild():
 # TRANSFORM_CHANGED notification in every children, which in turn notify the
 # parent Scatter node back about the changes).
 func rebuild(force_discover := false) -> void:
-	#update_helpers()
 
 	if not is_inside_tree() or not is_ready:
 		return
@@ -287,7 +285,7 @@ func rebuild(force_discover := false) -> void:
 
 # Re compute the desired output.
 # This is the main function, scattering the objects in the scene.
-# Scattered objects are stored under a Marker3D node called "ScatterOutput"
+# Scattered objects are stored under a Marker2D node called "ScatterOutput"
 # DON'T call this function directly outside of the 'rebuild()' function above.
 func _rebuild(force_discover) -> void:
 	if not enabled:
@@ -295,19 +293,19 @@ func _rebuild(force_discover) -> void:
 		clear_output()
 		build_completed.emit()
 		return
-	
+
 	_perform_sanity_check()
 
 	if force_discover:
 		_discover_items()
 		domain.discover_shapes(self)
 
-	
+
 	if items.is_empty() or (domain.is_empty() and not modifier_stack.does_not_require_shapes()):
 		clear_output()
 		push_warning("Scatter warning: No items or shapes, abort")
 		return
-	
+
 	if render_mode == 1:
 		clear_output() # TMP, prevents raycasts in modifier to self intersect with previous output
 
@@ -317,13 +315,13 @@ func _rebuild(force_discover) -> void:
 	if dbg_disable_thread:
 		modifier_stack.start_update(self, domain)
 		return
-	
+
 	if is_thread_running():
 		await _thread.wait_to_finish()
 
 	_thread = Thread.new()
 	_thread.start(_rebuild_threaded, Thread.PRIORITY_NORMAL)
-	
+
 
 func _rebuild_threaded() -> void:
 	# Disable thread safety, but only after 4.1 beta 3
@@ -331,7 +329,7 @@ func _rebuild_threaded() -> void:
 		# Calls static method on instance, otherwise it crashes in 4.0.x
 		@warning_ignore("static_called_on_instance")
 		_thread.set_thread_safety_checks_enabled(false)
-	
+
 	modifier_stack.start_update(self, domain.get_copy())
 
 
@@ -452,7 +450,7 @@ func _update_particles_system() -> void:
 # This does not create new nodes in the scene tree. This also means you can't
 # see these colliders, even when enabling "Debug > Visible collision shapes".
 func _create_collision(body: StaticBody2D, t: Transform2D) -> void:
-			
+
 	if not keep_static_colliders or render_mode == 1:
 		return
 
@@ -575,20 +573,15 @@ func _on_transforms_ready(new_transforms: ScatterTransformList) -> void:
 
 	if not transforms or transforms.is_empty():
 		clear_output()
-		#update_helpers()
 		return
 
 	match render_mode:
-		0:
-			_update_multimeshes()
-		1:
-			_update_duplicates()
-		2:
-			_update_particles_system()
+		0:	_update_multimeshes()
+		1:	_update_duplicates()
+		2:	_update_particles_system()
 
-	#update_helpers()
 	build_version += 1
-	
+
 	if is_inside_tree():
 		await get_tree().process_frame
 
@@ -613,24 +606,24 @@ func _sort_multimesh_by_y(multimesh: MultiMesh):
 func _draw():
 	if not Engine.is_editor_hint():
 		return
-			
+
 	if not _is_selected(self):
 		return
-		
+
 	_update_colors(dbg_color)
-	
+
 	if modifier_stack:
 		if is_thread_running():
 			_update_colors(dbg_loading_color)
-			
+
 		_curves.clear()
 		_curves = domain.get_edges()
-		
+
 		for curve in _curves:
 			var points: PackedVector2Array = curve.tessellate(4, 8)
 			draw_colored_polygon(points, _light_color)
 			draw_multiline(points, _drawing_color, 2, true)
-		
+
 
 func _is_selected(node: Node) -> bool:
 	var editor_selection := EditorInterface.get_selection()

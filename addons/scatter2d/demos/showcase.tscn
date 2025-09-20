@@ -18,7 +18,7 @@ stack = Array[ExtResource("3_w2vlq")]([SubResource("Resource_3n8nw")])
 
 [sub_resource type="Resource" id="Resource_w74o8"]
 script = ExtResource("7_w2vlq")
-radius = 300.0
+radius = 350.0
 metadata/_custom_type_script = "uid://be38uo81cr7xh"
 
 [sub_resource type="Resource" id="Resource_ye0vd"]
@@ -40,7 +40,14 @@ shape = SubResource("Resource_w74o8")
 metadata/_custom_type_script = "uid://h0re0ckmxr17"
 
 [node name="ScatterShape2" type="Node2D" parent="Scatter2D"]
-position = Vector2(201, -2)
+position = Vector2(220, 0)
+script = ExtResource("5_qae80")
+negative = true
+shape = SubResource("Resource_ye0vd")
+metadata/_custom_type_script = "uid://h0re0ckmxr17"
+
+[node name="ScatterShape3" type="Node2D" parent="Scatter2D"]
+position = Vector2(-220, 0)
 script = ExtResource("5_qae80")
 negative = true
 shape = SubResource("Resource_ye0vd")

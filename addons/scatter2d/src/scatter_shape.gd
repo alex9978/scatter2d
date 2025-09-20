@@ -10,7 +10,6 @@ const ScatterUtils := preload('common/scatter_utils.gd')
 @export var negative = false:
 	set(val):
 		negative = val
-		#update_helpers()
 		ScatterUtils.request_parent_to_rebuild(self)
 
 @export var shape: ScatterShapeBase:
@@ -23,7 +22,6 @@ const ScatterUtils := preload('common/scatter_utils.gd')
 		if shape:
 			shape.changed.connect(_on_shape_changed)
 
-		#update_helpers()
 		ScatterUtils.request_parent_to_rebuild(self)
 
 @export_group("Debug", "dbg_")
@@ -41,7 +39,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	queue_redraw()
-	
+
 
 func _notification(what):
 	match what:
@@ -67,7 +65,6 @@ func _set(property, _value):
 
 
 func _on_shape_changed() -> void:
-	#update_helpers()
 	ScatterUtils.request_parent_to_rebuild(self)
 
 
@@ -78,12 +75,12 @@ func _on_node_duplicated() -> void:
 func _draw():
 	if not Engine.is_editor_hint():
 		return
-		
+
 	if not _is_selected(self):
 		return
-		
+
 	_update_colors(dbg_color)
-	
+
 	if shape:
 		if "curve" in shape and shape.thickness == 0:
 			var curve: Curve2D = shape.curve

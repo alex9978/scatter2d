@@ -26,7 +26,7 @@ func _init() -> void:
 	use_edge_data = true
 
 	var p
-	
+
 	documentation.add_paragraph(
 		"Evenly create transforms along the edges of the ScatterShapes")
 
