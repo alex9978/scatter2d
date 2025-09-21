@@ -10,7 +10,7 @@ extends "modifier_base.gd"
 
 const Bounds := preload("../common/bounds.gd")
 
-@export_range(10, 1000) var radius := 25.0
+@export_range(1, 1000) var radius := 25.0
 @export var samples_before_rejection := 15
 
 
@@ -68,7 +68,6 @@ func _init() -> void:
 
 
 func _process_transforms(transforms, domain, seed) -> void:
-	print("poisson start")
 	_rng = RandomNumberGenerator.new()
 	_rng.set_seed(seed)
 	_domain = domain
@@ -83,7 +82,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 	spawn_points.push_back(_get_starting_point())
 
 	if not _starting_point_found:
-		print("no starting point - return")
+		print("Poisson: no starting point found")
 		return
 
 	# Sampler main loop
@@ -129,7 +128,6 @@ func _process_transforms(transforms, domain, seed) -> void:
 
 	transforms.append(_points)
 	transforms.shuffle(seed)
-	print("poisson end")
 
 
 func _init_grid() -> void:
@@ -157,7 +155,6 @@ func _get_starting_point() -> Transform2D:
 		point.x = _rng.randf_range(_bounds.min.x, _bounds.max.x)
 		point.y = _rng.randf_range(_bounds.min.y, _bounds.max.y)
 
-	print("tries: ", tries)
 	_starting_point_found = tries < 200
 
 	var starting_point := Transform2D()

@@ -60,7 +60,7 @@ func process_transforms(transforms:TransformList, domain:Domain, global_seed:int
 
 	var random_seed: int = global_seed
 	if can_override_seed and override_global_seed:
-		random_seed = custom_seed
+		random_seed = randi() if custom_seed == -1 else custom_seed
 	interrupt_update = false
 
 	@warning_ignore("redundant_await") # Not redundant as child classes could use the await keyword here.

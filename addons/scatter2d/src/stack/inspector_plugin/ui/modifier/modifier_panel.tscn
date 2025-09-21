@@ -179,7 +179,9 @@ size_flags_vertical = 3
 layout_mode = 2
 tooltip_text = "Random seed.
 
-Enable to force a custom seed on this modifier only. If this option is disabled, the Global Seed from the Scatter2D node will be used instead."
+Enable to force a custom seed on this modifier only.
+Set to -1 to randomize the custom seed.
+If this option is disabled, the Global Seed from the Scatter2D node will be used instead."
 icon = ExtResource("11_qwhro")
 icon_alignment = 0
 default_icon = ExtResource("11_qwhro")
