@@ -116,7 +116,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 				spawn_points.push_back(t)
 
 				var index = _cell_x + _cell_y * _grid_size.y
-				if index < _grid.size():
+				if index >= 0 and index < _grid.size():
 					_grid[index] = _points.size() - 1
 
 				break
