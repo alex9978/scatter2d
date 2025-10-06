@@ -92,7 +92,7 @@ func _discover_modifiers_recursive(path) -> void:
 		var full_path = path_root + file
 		var script = load(full_path)
 		if not script or not script.can_instantiate():
-			print("Error: Failed to load script ", file)
+			push_error("Error: Failed to load script ", file)
 			continue
 
 		_modifiers.push_back(script)

@@ -51,7 +51,6 @@ func _process_transforms(transforms, domain, seed) -> void:
 		var length: float = curve.get_baked_length()
 		var count := int(round(length / spacing))
 		var stepped_length: float = count * spacing
-		print(length, " ", count, " ", stepped_length)
 
 		for i in count:
 			var curve_offset = i * spacing + abs(offset)

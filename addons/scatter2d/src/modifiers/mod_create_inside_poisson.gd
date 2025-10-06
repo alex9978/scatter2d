@@ -82,7 +82,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 	spawn_points.push_back(_get_starting_point())
 
 	if not _starting_point_found:
-		print("Poisson: no starting point found")
+		push_warning("Poisson: no starting point found")
 		return
 
 	# Sampler main loop

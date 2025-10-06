@@ -46,4 +46,3 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 	t.origin = t_origin
 
 	transforms.list.append(t)
-	print(t)
