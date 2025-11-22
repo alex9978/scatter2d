@@ -85,7 +85,7 @@ func _draw():
 		if "curve" in shape and shape.thickness == 0:
 			var curve: Curve2D = shape.curve
 			if curve:
-				var points: PackedVector2Array = curve.tessellate(4, 8)
+				var points := curve.tessellate(4, 8)
 				draw_polyline(points, _drawing_color, 2, true)
 		else:
 			var edges = shape.get_closed_edges(Transform2D())
@@ -95,7 +95,7 @@ func _draw():
 
 
 func _is_selected(node: Node) -> bool:
-	var editor_selection := EditorInterface.get_selection()
+	var editor_selection = Engine.get_singleton(&"EditorInterface").get_selection()
 	var selected = node in editor_selection.get_selected_nodes()
 	if negative and not selected:
 		selected = get_parent() in editor_selection.get_selected_nodes()

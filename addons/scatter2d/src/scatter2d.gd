@@ -624,7 +624,7 @@ func _draw():
 
 
 func _is_selected(node: Node) -> bool:
-	var editor_selection := EditorInterface.get_selection()
+	var editor_selection = Engine.get_singleton(&"EditorInterface").get_selection()
 	return node in editor_selection.get_selected_nodes()
 
 

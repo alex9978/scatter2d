@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 [application]
 
 config/name="Scatter2D"
-config/features=PackedStringArray("4.5")
+config/features=PackedStringArray("4.6")
 
 [debug]
 
