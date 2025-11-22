@@ -83,6 +83,7 @@ func _process_transforms(transforms, domain, seed) -> void:
 
 	if not _starting_point_found:
 		push_warning("Poisson: no starting point found")
+		enabled = false
 		return
 
 	# Sampler main loop
@@ -179,7 +180,10 @@ func _is_valid(candidate: Vector2) -> bool:
 
 	for x in range(search_start_x, search_end_x + 1):
 		for y in range(search_start_y, search_end_y + 1):
-			var point_index = _grid[x + y * _grid_size.y]
+			var array_index = x + y * _grid_size.y
+			if array_index >= _grid.size():
+				return false
+			var point_index = _grid[array_index]
 			if _is_point_too_close(candidate, point_index):
 				return false
 
