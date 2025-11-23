@@ -86,7 +86,8 @@ func _draw():
 			var curve: Curve2D = shape.curve
 			if curve:
 				var points := curve.tessellate(4, 8)
-				draw_polyline(points, _drawing_color, 2, true)
+				if points.size() > 1:
+					draw_polyline(points, _drawing_color, 2, true)
 		else:
 			var edges = shape.get_closed_edges(Transform2D())
 			for edge in edges:

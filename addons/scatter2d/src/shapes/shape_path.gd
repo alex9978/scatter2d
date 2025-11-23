@@ -136,6 +136,7 @@ func get_closest_to(position):
 func get_closed_edges(shape_t: Transform2D) -> Array[PackedVector2Array]:
 	if not closed and thickness <= 0: return []
 	if not curve: return []
+	if curve.point_count < 2: return []
 
 	var edges: Array[PackedVector2Array] = []
 	var polyline := PackedVector2Array()

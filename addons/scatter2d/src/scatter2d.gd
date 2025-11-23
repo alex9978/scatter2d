@@ -613,10 +613,10 @@ func _draw():
 	if modifier_stack:
 		if is_thread_running():
 			_update_colors(dbg_loading_color)
-#
+
 		_curves.clear()
 		_curves = domain.get_edges()
-#
+
 		for curve in _curves:
 			var points := curve.tessellate(4, 8)
 			draw_colored_polygon(points, _light_color)
