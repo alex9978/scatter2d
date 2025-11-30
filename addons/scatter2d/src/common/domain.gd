@@ -11,8 +11,8 @@ extends RefCounted
 # An instance of this class is passed to the modifiers during a rebuild.
 
 
-const Scatter2D := preload("../scatter2d.gd")
-const ScatterShape := preload("../scatter_shape.gd")
+#const Scatter2D := preload("../scatter2d.gd")
+#const ScatterShape := preload("../scatter_shape.gd")
 const ShapeBase := preload("../shapes/shape_base.gd")
 const Bounds := preload("../common/bounds.gd")
 
@@ -173,6 +173,7 @@ func compute_edges() -> void:
 		var p1: ComplexPolygon = source_polygons.pop_back()
 		var max_steps: int = source_polygons.size()
 		var i = 0
+		var res: Array[PackedVector2Array]
 
 		# Test p1 against every other polygon from source_polygon until a
 		# successful merge. If no merge happened, put it in the final array.
@@ -187,13 +188,13 @@ func compute_edges() -> void:
 			# merge them and go the next iteration.
 			var full_overlap = false
 			for ip1 in p1.inner:
-				var res = Geometry2D.clip_polygons(p2.outer, ip1)
+				res = Geometry2D.clip_polygons(p2.outer, ip1)
 				if res.is_empty():
 					full_overlap = true
 					break
 
 			for ip2 in p2.inner:
-				var res = Geometry2D.clip_polygons(p1.outer, ip2)
+				res = Geometry2D.clip_polygons(p1.outer, ip2)
 				if res.is_empty():
 					full_overlap = true
 					break
@@ -203,7 +204,7 @@ func compute_edges() -> void:
 				continue
 
 			# Try to merge the two polygons p1 and p2
-			var res = Geometry2D.merge_polygons(p1.outer, p2.outer)
+			res = Geometry2D.merge_polygons(p1.outer, p2.outer)
 			var outer_polygons := 0
 			for p in res:
 				if not Geometry2D.is_polygon_clockwise(p):

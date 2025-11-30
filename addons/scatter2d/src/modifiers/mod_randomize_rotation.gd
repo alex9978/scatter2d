@@ -38,7 +38,7 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 	_rng.set_seed(random_seed)
 
 	var t: Transform2D
-	var gt: Transform2D = domain.get_global_transform()
+	var _gt: Transform2D = domain.get_global_transform()
 
 	for i in transforms.size():
 		t = transforms.list[i]

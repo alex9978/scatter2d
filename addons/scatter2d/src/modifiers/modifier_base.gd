@@ -8,6 +8,7 @@ extends Resource
 # Transforms in the provided transforms list must be in global space.
 
 signal warning_changed
+@warning_ignore("unused_signal")
 signal modifier_changed
 
 const TransformList = preload("../common/transform_list.gd")

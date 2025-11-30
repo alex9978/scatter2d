@@ -2,6 +2,7 @@
 extends Resource
 
 signal stack_changed
+@warning_ignore("unused_signal")
 signal value_changed
 signal transforms_ready
 

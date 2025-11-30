@@ -3,7 +3,9 @@ class_name Scatter2D
 extends Node2D
 
 
+@warning_ignore("unused_signal")
 signal shape_changed
+@warning_ignore("unused_signal")
 signal thread_completed
 signal build_completed
 

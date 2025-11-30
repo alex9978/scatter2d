@@ -153,8 +153,8 @@ func _get_starting_point() -> Transform2D:
 	var tries := 0
 	while not _domain.is_point_inside(point) and tries < 200:
 		tries += 1
-		point.x = _rng.randf_range(_bounds.min.x, _bounds.max.x)
-		point.y = _rng.randf_range(_bounds.min.y, _bounds.max.y)
+		point.x = _rng.randf_range(_bounds.bmin.x, _bounds.bmax.x)
+		point.y = _rng.randf_range(_bounds.bmin.y, _bounds.bmax.y)
 
 	_starting_point_found = tries < 200
 
@@ -168,7 +168,7 @@ func _is_valid(candidate: Vector2) -> bool:
 		return false
 
 	# compute candidate current cell
-	var t_candidate = candidate - _bounds.min
+	var t_candidate = candidate - _bounds.bmin
 	_cell_x = floor(t_candidate.x / _cell_size)
 	_cell_y = floor(t_candidate.y / _cell_size)
 

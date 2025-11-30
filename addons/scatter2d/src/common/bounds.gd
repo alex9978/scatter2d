@@ -3,8 +3,8 @@ extends Resource
 
 var size: Vector2
 var center: Vector2
-var min: Vector2
-var max: Vector2
+var bmin: Vector2
+var bmax: Vector2
 
 var _points := 0
 
@@ -12,18 +12,18 @@ var _points := 0
 func clear() -> void:
 	size = Vector2.ZERO
 	center = Vector2.ZERO
-	min = Vector2.ZERO
-	max = Vector2.ZERO
+	bmin = Vector2.ZERO
+	bmax = Vector2.ZERO
 	_points = 0
 
 
 func feed(point: Vector2) -> void:
 	if _points == 0:
-		min = point
-		max = point
+		bmin = point
+		bmax = point
 
-	min = _minv(min, point)
-	max = _maxv(max, point)
+	bmin = _minv(bmin, point)
+	bmax = _maxv(bmax, point)
 	_points += 1
 
 
@@ -32,8 +32,8 @@ func compute_bounds() -> void:
 	if min == null or max == null:
 		return
 
-	size = max - min
-	center = min + (size / 2.0)
+	size = bmax - bmin
+	center = bmin + (size / 2.0)
 
 
 # Returns a vector with the smallest values in each of the 2 input vectors

@@ -13,7 +13,7 @@ extends Node
 
 const DEFAULT_CACHE_FOLDER := "res://addons/scatter2d/cache/"
 
-const Scatter2D := preload("../scatter2d.gd")
+#const Scatter2D := preload("../scatter2d.gd")
 const ScatterTransformList := preload("../common/transform_list.gd")
 
 

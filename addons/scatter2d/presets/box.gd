@@ -5,7 +5,7 @@ extends Node2D
 @export var color := Color(0, 0.8, 0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	queue_redraw()
 
 

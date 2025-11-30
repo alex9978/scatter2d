@@ -19,7 +19,11 @@ config/icon="res://icon.svg"
 [application]
 
 config/name="Scatter2D"
+config/description="This is an add-on for Godot 4, based on the excellent plugin HungryProton/scatter, which automates the positioning of assets in a 2D scene.
+If you have a lot of props to place, and you would rather not do it by hand, Scatter2D may be useful to you."
+run/main_scene="uid://dtu41wuo4tnvv"
 config/features=PackedStringArray("4.6")
+config/icon="uid://bc3sfclxkiqs2"
 
 [debug]
 

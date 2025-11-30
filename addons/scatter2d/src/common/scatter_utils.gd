@@ -1,7 +1,7 @@
 extends Node
 
-const Scatter2D := preload("../scatter2d.gd")
-const ScatterItem := preload("../scatter_item.gd")
+#const Scatter2D := preload("../scatter2d.gd")
+#const ScatterItem := preload("../scatter_item.gd")
 const ModifierStack := preload("../stack/modifier_stack.gd")
 
 
@@ -78,6 +78,12 @@ static func get_all_mesh_instances_from(node: Node) -> Array[MeshInstance2D]:
 static func get_final_material(item: ScatterItem, mi: MeshInstance2D) -> Material:
 	if item.override_material:
 		return item.override_material
+
+	if mi.material_override:
+		return mi.material_override
+
+	if mi.get_surface_override_material(0):
+		return mi.get_surface_override_material(0)
 
 	return null
 
@@ -224,7 +230,6 @@ static func get_or_create_particles(item: ScatterItem) -> GPUParticles2D:
 	return particles
 
 
-
 static func get_merged_meshes_from(item: ScatterItem) -> MeshInstance2D:
 	if not item:
 		return null
@@ -235,164 +240,50 @@ static func get_merged_meshes_from(item: ScatterItem) -> MeshInstance2D:
 
 	source.transform = Transform2D()
 
-	# Get all the mesh instances
+	# get all the mesh instances
 	var mesh_instances: Array[MeshInstance2D] = get_all_mesh_instances_from(source)
 	source.queue_free()
 
 	if mesh_instances.is_empty():
 		return null
 
-	# If there's only one mesh instance we can reuse it directly if the materials allow it.
-	if mesh_instances.size() == 1:
-		# Duplicate the meshinstance, not the mesh resource
-		var mi: MeshInstance2D = mesh_instances[0].duplicate()
-		return mi
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
-		# MI uses a material override, all surface materials will be ignored
-		#if mi.material_override:
-			#return mi
-
-		var surface_overrides_count := 0
-		for i in mi.get_surface_override_material_count():
-			if mi.get_surface_override_material(i):
-				surface_overrides_count += 1
-
-		# If there's one material override or less, no duplicate mesh is required.
-		if surface_overrides_count <= 1:
-			return mi
-
-
-	# Helper lambdas
-	var get_material_for_surface = func (mi: MeshInstance2D, idx: int) -> Material:
-		if mi.get_material_override():
-			return mi.get_material_override()
-
-		if mi.get_surface_override_material(idx):
-			return mi.get_surface_override_material(idx)
-
-		if mi.mesh is PrimitiveMesh:
-			return mi.mesh.get_material()
-
-		return mi.mesh.surface_get_material(idx)
-
-	# Count how many surfaces / materials there are in the source instances
-	var total_surfaces := 0
-	var surfaces_map := {}
-	# Key: Material
-	# data: Array[Dictionary]
-	# 	"surface": surface index
-	#	"mesh_instance": parent mesh instance
+	var index_offset := 0
 
 	for mi in mesh_instances:
-		if not mi.mesh:
-			continue # Should not happen
+		if not is_instance_valid(mi) or not is_instance_valid(mi.mesh):
+			continue
 
-		# Update the total surface count
-		var surface_count = mi.mesh.get_surface_count()
-		total_surfaces += surface_count
+		var mesh := mi.mesh as ArrayMesh
+		for s in range(mesh.get_surface_count()):
+			var arrays := mesh.surface_get_arrays(s)
+			var verts: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var uvs: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+			var cols: PackedColorArray   = arrays[Mesh.ARRAY_COLOR]
+			var inds: PackedInt32Array   = arrays[Mesh.ARRAY_INDEX]
 
-		# Store surfaces in the material indexed dictionary
-		for surface_index in surface_count:
-			var material: Material = get_material_for_surface.call(mi, surface_index)
-			if not material in surfaces_map:
-				surfaces_map[material] = []
+			for v in verts:
+				var v2 := Vector2(v.x, v.y)
+				v2 = mi.global_transform * v2
+				st.add_vertex(Vector3(v2.x, v2.y, 0))
 
-			surfaces_map[material].push_back({
-				"surface": surface_index,
-				"mesh_instance": mi,
-			})
+			for uv in uvs:
+				st.add_uv(uv)
 
-	# ------
-	# Less than 8 surfaces, merge in a single MeshInstance
-	# ------
-	if total_surfaces <= 8:
-		var mesh := ImporterMesh.new()
+			for col in cols:
+				st.add_color(col)
 
-		for mi in mesh_instances:
-			var inverse_transform := mi.transform.affine_inverse()
+			for i in inds:
+				st.add_index(i + index_offset)
 
-			for surface_index in mi.mesh.get_surface_count():
-				# Retrieve surface data
-				var primitive_type = Mesh.PRIMITIVE_TRIANGLES
-				var format = 0
-				var arrays := mi.mesh.surface_get_arrays(surface_index)
-				if mi.mesh is ArrayMesh:
-					primitive_type = mi.mesh.surface_get_primitive_type(surface_index)
-					format = mi.mesh.surface_get_format(surface_index) # Preserve custom data format
+			index_offset += verts.size()
 
-				# Update vertex position based on MeshInstance transform
-				var vertex_count = arrays[ArrayMesh.ARRAY_VERTEX].size()
-				var vertex: Vector2
-				for index in vertex_count:
-					vertex = arrays[ArrayMesh.ARRAY_VERTEX][index] * inverse_transform
-					arrays[ArrayMesh.ARRAY_VERTEX][index] = vertex
-
-				# Get the material if any
-				var material: Material = get_material_for_surface.call(mi, surface_index)
-
-				# Store updated surface data in the new mesh
-				mesh.add_surface(primitive_type, arrays, [], {}, material, "", format)
-
-		if item.lod_generate:
-			mesh.generate_lods(item.lod_merge_angle, item.lod_split_angle, [])
-
-		var instance := MeshInstance2D.new()
-		instance.mesh = mesh.get_mesh()
-		return instance
-
-	# ------
-	# Too many surfaces and materials, merge everything in a single one.
-	# ------
-	var total_unique_materials := surfaces_map.size()
-
-	if total_unique_materials > 8:
-		var surface_tool := SurfaceTool.new()
-		surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-
-		for mi in mesh_instances:
-			var mesh : Mesh = mi.mesh
-			for surface_i in mesh.get_surface_count():
-				surface_tool.append_from(mesh, surface_i, mi.transform)
-
-		var mesh := ImporterMesh.new()
-		mesh.add_surface(surface_tool.get_primitive_type(), surface_tool.commit_to_arrays())
-
-		if item.lod_generate:
-			mesh.generate_lods(item.lod_merge_angle, item.lod_split_angle, [])
-
-		var instance = MeshInstance2D.new()
-		instance.mesh = mesh.get_mesh()
-		return instance
-
-	# ------
-	# Merge surfaces grouped by their materials
-	# ------
-	var mesh := ImporterMesh.new()
-
-	for material in surfaces_map.keys():
-		var surface_tool := SurfaceTool.new()
-		surface_tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-
-		var surfaces: Array = surfaces_map[material]
-		for data in surfaces:
-			var idx: int = data["surface"]
-			var mi: MeshInstance2D = data["mesh_instance"]
-
-			surface_tool.append_from(mi.mesh, idx, mi.transform)
-
-		mesh.add_surface(
-			surface_tool.get_primitive_type(),
-			surface_tool.commit_to_arrays(),
-			[], {},
-			material)
-
-	if item.lod_generate:
-		mesh.generate_lods(item.lod_merge_angle, item.lod_split_angle, [])
-
-	var instance := MeshInstance2D.new()
-	instance.mesh = mesh.get_mesh()
-	return instance
-
+	var merged_mesh := st.commit()
+	var merged_instance := MeshInstance2D.new()
+	merged_instance.mesh = merged_mesh
+	return merged_instance
 
 
 static func get_aabb_from_transforms(transforms : Array) -> Rect2:

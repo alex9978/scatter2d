@@ -38,7 +38,7 @@ func _init() -> void:
 		"A value of 0 would result in infinite transforms, so it's capped to 0.05
 		at least.")
 
-func _process_transforms(transforms, domain, seed) -> void:
+func _process_transforms(transforms, domain, dom_seed) -> void:
 	spacing.x = max(_min_spacing, spacing.x)
 	spacing.y = max(_min_spacing, spacing.y)
 
@@ -83,4 +83,4 @@ func _process_transforms(transforms, domain, seed) -> void:
 		new_transforms.resize(t_index)
 
 	transforms.append(new_transforms)
-	transforms.shuffle(seed)
+	transforms.shuffle(dom_seed)
