@@ -8,3 +8,4 @@ export_presets.cfg
 # Scatter-specific ignores
 addons/scatter2d/cache/
 tmp/
+.vscode/settings.json

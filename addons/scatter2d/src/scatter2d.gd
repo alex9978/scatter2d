@@ -143,7 +143,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	queue_redraw()
+		queue_redraw()
 
 
 func _exit_tree():
@@ -312,7 +312,7 @@ func _rebuild(force_discover) -> void:
 	if keep_static_colliders:
 		_clear_collision_data()
 
-	if dbg_disable_thread:
+	if dbg_disable_thread or OS.has_feature("web"):
 		modifier_stack.start_update(self, domain)
 		return
 

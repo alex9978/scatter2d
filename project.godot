@@ -27,7 +27,9 @@ config/icon="uid://bc3sfclxkiqs2"
 
 [debug]
 
-gdscript/warnings/exclude_addons=false
+gdscript/warnings/directory_rules={
+"res://addons": 1
+}
 
 [display]
 

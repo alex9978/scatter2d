@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtu41wuo4tnvv"]
+[gd_scene format=3 uid="uid://dtu41wuo4tnvv"]
 
 [ext_resource type="Script" uid="uid://blehcnoynshbt" path="res://addons/scatter2d/src/scatter2d.gd" id="1_cro7m"]
 [ext_resource type="Script" uid="uid://xn7w5wbnwdme" path="res://addons/scatter2d/src/stack/modifier_stack.gd" id="2_4ab3x"]
@@ -12,11 +12,11 @@
 
 [sub_resource type="Resource" id="Resource_w2vlq"]
 script = ExtResource("4_4ab3x")
+spacing = Vector2(30, 30)
 reference_frame = 1
 
 [sub_resource type="Resource" id="Resource_3n8nw"]
 script = ExtResource("5_w2vlq")
-enabled = false
 reference_frame = 2
 
 [sub_resource type="Resource" id="Resource_qae80"]
